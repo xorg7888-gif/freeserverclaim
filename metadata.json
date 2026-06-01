@@ -1,0 +1,6 @@
+{
+  "name": "HDX-CLOUD Portal",
+  "description": "Premium dark cinematic token claiming and hosting administration portal with real authentication, IP constraints, and admin workflows.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
