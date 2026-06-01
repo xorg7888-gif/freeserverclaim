@@ -1,0 +1,37 @@
+// Prisma datasource configuration for production deployment under PostgreSQL provider
+// Configure your DATABASE_URL inside your VPS .env file.
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  password_hash String
+  created_at    DateTime @default(now()) @map("created_at")
+  claim         Claim?
+
+  @@map("users")
+}
+
+model Claim {
+  id          Int       @id @default(autoincrement())
+  user_id     Int       @unique @map("user_id")
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  email       String
+  ip_address  String    @map("ip_address")
+  token       String    @unique
+  status      String    @default("pending") // 'pending' | 'approved' | 'rejected'
+  created_at  DateTime  @default(now()) @map("created_at")
+  updated_at  DateTime  @updatedAt @map("updated_at")
+  approved_at DateTime? @map("approved_at")
+  rejected_at DateTime? @map("rejected_at")
+
+  @@map("claims")
+}
